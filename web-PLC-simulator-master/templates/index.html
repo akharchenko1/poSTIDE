@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+ 
+ <script src="../static/jquery-linenumbers.js"></script>
+  <script>$('document').ready(function(){
+            $('textarea').linenumbers();
+            $(window).resize(function() { 
+                $('textarea').linenumbers(); 
+            });
+            document.getElementById('poST_code').addEventListener('keydown', function(e) {
+                if (e.key == 'Tab') {
+                    e.preventDefault();
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 1;
+                }
+            });
+        })</script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3B067ZK7SP"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-3B067ZK7SP');
+        </script>
+<style>
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.instrbar {
+overflow: hidden;
+    background-color: #ddd;
+	height = 25;
+}
+
+.image-button {
+  width: 25px;
+  height: 25px;
+  border: none;
+  background-size: cover;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content button, .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+	width:100%;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+	cursor: pointer;
+}
+
+.dropdown-content button:hover, .dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.btn {
+    float: none;
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 12px 16px;
+	width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.input-file {
+	position: relative;
+	display: inline-block;
+}
+.input-file span {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 14px;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	background-color: #419152;
+	line-height: 22px;
+	height: 40px;
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+.input-file input[type=file] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	display: block;
+	width: 0;
+	height: 0;
+}
+ 
+/* Focus */
+.input-file input[type=file]:focus + span {
+	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+ 
+/* Hover/active */
+.input-file:hover span {
+	background-color: #59be6e;
+}
+.input-file:active span {
+	background-color: #2E703A;
+}
+ 
+/* Disabled */
+.input-file input[type=file]:disabled + span {
+	background-color: #eee;
+}
+
+.column {
+    float: left;
+    width: 45%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+height:50%;
+width: 100%;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+
+textarea {
+
+    width: 100%;
+	height:100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 0px;
+    
+    resize: none;
+}
+
+
+.container {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #f2f2ff;
+    padding: 5px;
+}
+</style>
+</head>
+<body>
+<form method="POST" enctype="multipart/form-data" id="poST_code_form" name="poST_code_form">
+<div class="navbar">
+  <div class="dropdown">
+    <button type="button" name ="but" class="dropbtn">Файл 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <button id = "clear" name ="but" class="btn" type = "reset" form = "poST_code_form"> Очистить</button>
+	  <label class="input-file">
+	   	<input type="file" id="Download">		
+	   	<span>Загрузить</span>
+ 	</label>
+	  <a id="tosave">Сохранить в файл</a>
+	  
+    </div>
+  </div>
+  <div class="dropdown">
+	<button type="button" name ="but" class="dropbtn">Работа программы 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+	
+	<button type="button" class="btn" id ="Run" name ="action" value="runProgram" > Запустить</button>
+	<button type="button" class="btn" style= "background-color: #ddd" name ="action" id="pauseSim" value="pauseProgram" disabled=""><span id="pause" >Пауза</span></button>
+	<button type="button" class="btn" style= "background-color: #ddd" name ="action" id="stopSim" value="stopProgram" disabled="">Остановить</button>
+	<button type="button" class="btn" style= "background-color: #ddd" name ="action" id="loadInp" value="loadInputs_no_new_page" disabled="">Задать Input</button>
+	<button type="button" class="btn" style= "background-color: #ddd" name ="action" id="oneCycle" value="oneCycle" >Один цикл программы</button>
+    </div>
+  </div>
+  <div class="dropdown">
+	<button type="button" name ="but" class="dropbtn" name ="Object">Объект управления 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+	<button type="button" id = "Object" name ="but" class="btn"> Открыть вкладку выбора</button>
+
+    </div>
+  </div>
+  <a id = "About" href="#news">Справка</a>
+</div>
+
+<div class="instrbar">
+
+      <button type="button" title="Очистить" name ="but" class="image-button" style="background-image: url('../static/clean.png')" onclick = document.getElementById('clear').click() form = "poST_code_form" ></button>
+	  <button type="button" title="Загрузить код из компьютера" name ="but" class="image-button" style="background-image: url('../static/open.png')" id="download" onclick = document.getElementById('Download').click()></button>
+	   			
+	   	
+ 	<button type="button" title="Сохранить на компьютере" name ="but" class="image-button" style="background-image: url('../static/save.png')" id ="save"  onclick = document.getElementById('tosave').click()></button>
+	  
+	 
+	<button type="button" title="Запуск программы" name ="but" class="image-button" style="background-image: url('../static/run.png')" id ="run"   onclick = document.getElementById('Run').click()></button>
+	<button type="button" title="Пауза/Продолжить" name ="but" class="image-button" style= " background-image: url('../static/pause.png')"  id="pausesim" disabled="" onclick = document.getElementById('pauseSim').click()></button>
+	<button type="button" title="Остановить" name ="but" class="image-button" style= " background-image: url('../static/stop.png')" id="stopsim" disabled="" onclick = document.getElementById('stopSim').click()></button>
+	<button type="button" title="Задать Input" name ="but" class="image-button" style= " background-image: url('../static/loadinp.png')"  id="loadinp" disabled="" onclick = document.getElementById('loadInp').click()></button>
+	<button type="button" title="Один цикл программы" name ="but" class="image-button" style= " background-image: url('../static/onecycle.png')" id="onecycle" onclick = document.getElementById('oneCycle').click()></button>
+	<button type="button" title="Открыть вкладку выбора объекта" name ="but" class="image-button"style="background-image: url('../static/object.png')" onclick = document.getElementById('Object').click()> </button>
+	<button type="button" title="Справка" name ="but" class="image-button" style="background-image: url('../static/about.png')" id ="about"  onclick = document.getElementById('About').click()></button>
+	
+	<input class="ss" name ="mnoj" id = "mnojitel" style="width: 100px height:25px" type="text" placeholder="1"></input>
+	<button  type="button" name ="action" id = "mnojVrem" style="width: 50 height: 25px " value="mnojVrem" >Множитель времени</button>
+</div>
+
+<div class="container">
+  
+
+     <div class="row">
+  <div class="column">
+   <label for="poST_code">Поле ввода программы</label>
+       <div class="col-6"style="height:400px">
+	   
+	     <textarea type="text" id="poST_code" name="poST_code" placeholder="poST_code" style="height:400px" autofocus></textarea>
+		 
+	   </div>
+	   
+	   </div>
+	   <div class="column">
+       <div class = "row">
+	   	  <div class="column" style = "width: 47%">
+		  <label for="Input">Значение Input Vars</label>
+		<div class="col-6" style="height:160px">
+		 
+	        <textarea id="Input" name="Input" style="height:160px" placeholder="inputs" readonly></textarea>
+		  </div>
+	    </div>
+           
+
+		<div class="column" style = "width: 47%">
+		<label for="Output">Значение Output Vars</label>
+          <div class="col-6" style="height:160px">
+		    
+	        <textarea id="Output" name="Output" style="height:160px" placeholder="outputs" readonly></textarea>
+		  </div>
+	    </div>
+
+	   </div>
+	   <div class = "row">
+	   	  <div class="column" style = "width: 47%">
+		<label for="States">Состояние процессов</label>
+            <div class="col-6" style="height:160px">
+			 
+	        <textarea id="States" name="States" style="height:160px" placeholder="states" readonly></textarea>
+		  </div>
+	    </div>
+
+		<div class="column" style = "width: 47%">
+		<label for="Times">Таймеры</label>
+          <div class="col-6" style="height:160px">
+		   
+	        <textarea id="Times" name="Times" style="height:160px" placeholder="times" readonly></textarea>
+		  </div>
+	    </div>
+
+	   </div>
+	</div>
+	</div>
+	<div class="row">
+	<div class="column">
+	  <div class="column" style = "width: 47%">
+
+        
+		<label for="Errors">Ошибки и уведомления</label>
+          <div class="col-6" style="height:160px">
+		   
+	        <textarea id="Errors" name="Errors" style="height:160px" placeholder="Errors" readonly></textarea>
+		  </div>
+		  </div>
+		<div class="column" style = "width: 47%">
+		  <div class="container" style="height: 160px; overflow: scroll; padding-bottom: 10px;">
+                        <li>
+                            <a>Inputs</a>
+                            <ul class="scroll" id="assetNameMenu">
+                            </ul>
+                        </li>
+                    </div>
+	    </div>
+		</div>
+
+<div class="column">
+
+	  <div class="column" style = "width: 47%">
+		<label for="Globvars">Значение Global Vars</label>
+		  <div class="col-6" style="height:160px">
+		   
+	        <textarea id="Globvars" name="Globvars" style="height:160px" placeholder="globvars" readonly></textarea>
+		  </div>
+	    </div>
+		<form id="out">
+		<div class="column" style = "width: 47%">
+		<label for="Vars">Значение Vars</label>
+          <div class="col-6" style="height:160px">
+		   
+	        <textarea id="Vars" name="Vars" style="height:160px" placeholder="vars" readonly></textarea>
+		  </div>
+	    </div>
+		</form>
+		</div>
+	   </div>
+	
+
+     
+</div>
+</form>
+<script>
+$(".ss").keypress(function(event){
+  event = event || window.event;
+  if (event.charCode && event.charCode!=0 && event.charCode!=46 && (event.charCode < 48 || event.charCode > 57) )
+    return false;
+});
+</script>
+<script>
+
+$("#Download").change(function(){
+	var reader = new FileReader();
+	reader.onload = function(e){
+		$("#poST_code").val(e.target.result);
+	};
+	reader.readAsText($("#Download")[0].files[0], "UTF-8");
+});
+</script>
+<script>
+document.getElementById('tosave').onclick = function() {
+    let text = document.getElementById("poST_code").value;
+    let myData = 'data:application/txt;charset=utf-8,' + encodeURIComponent(text);
+    this.href = myData;
+    this.download = 'code.post';
+}
+</script>
+
+<script>
+document.getElementById('Object').onclick = function() {
+    window.open(window.location.href + 'plant/?userpath={{path}}')
+}
+</script>
+
+<script>
+document.getElementById('mnojVrem').onclick = function() {
+   var data = new FormData()
+  data.append('action', 'mnojVrem')
+  data.append('mnoj', document.getElementById('mnojitel').value)
+  data.append('poST_code', document.getElementById('poST_code').value)
+  console.log(Array.from(data.entries()))
+  $.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){}});
+}
+</script>
+
+
+<script>
+var intervalId;
+document.getElementById('Run').onclick = function() {
+programText=document.getElementById('poST_code').value;
+var data = new FormData()
+  data.append('action', 'runProgram')
+  data.append('mnoj', document.getElementById('mnojitel').value)
+  data.append('poST_code', document.getElementById('poST_code').value)
+  console.log(Array.from(data.entries()))
+  $.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){
+   
+
+
+
+document.getElementById('Run').setAttribute('disabled',true);
+document.getElementById('Run').style.background = "#ddd";
+document.getElementById('oneCycle').setAttribute('disabled',true);
+document.getElementById('oneCycle').style.background = "#ddd";
+document.getElementById('onecycle').setAttribute('disabled',true);
+document.getElementById('onecycle').style.backgroundColor = "#ddd";
+document.getElementById('run').setAttribute('disabled',true);
+document.getElementById('run').style.backgroundColor = "#ddd";
+   document.getElementById('pauseSim').removeAttribute("disabled");
+   document.getElementById('pauseSim').style.background="white";
+   document.getElementById('pausesim').removeAttribute("disabled");
+   document.getElementById('pausesim').style.backgroundColor= "white";
+   document.getElementById('stopSim').removeAttribute("disabled");
+   document.getElementById('stopSim').style.background= "white";
+   document.getElementById('stopsim').removeAttribute("disabled");
+   document.getElementById('stopsim').style.backgroundColor= "white";
+   updateInputs();
+}});
+intervalId = setInterval(() => {updateVars();updateProg();}, 1000);
+   }
+</script>
+
+
+ <script>
+                    function updateInputs() {
+                        $.getJSON("{{path}}"+"inputs", function(data) {
+                            if(data ==null) 
+							{
+                                setTimeout(updateInputs, 1000);
+                            }
+                            
+                                
+                                var assetList = $('#assetNameMenu');
+                                for(var id in data)
+                                {
+                                    
+                                        var li = $('<li/>')
+                                            .addClass('ui-menu-item')
+                                            .attr('role', 'menuitem')
+                                            .appendTo(assetList);
+
+                                        var input = $('<input/>')
+                                            .addClass('ui-all')
+                                            .attr('type', 'text')
+                                            .attr('value', data[id])
+                                            .attr('name', 'inputcheck')
+                                            .appendTo(li);
+
+                                        var aaa = $('<a/>')
+                                            .addClass('ui-all')
+                                            .text(id)
+                                            .appendTo(li);
+                                    
+                                };
+                            });
+                        }
+                </script>
+
+<script>
+document.getElementById('pauseSim').onclick = function() {
+var data = new FormData()
+  data.append('action', 'pauseProgram')
+  data.append('poST_code', programText)
+  console.log(Array.from(data.entries()))
+  $.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){
+    if(document.getElementById('pause').innerHTML === 'Пауза') {
+	document.getElementById('pause').innerHTML = 'Продолжить';
+	clearInterval(intervalId);
+	updateVars();
+	document.getElementById('oneCycle').removeAttribute("disabled");
+    document.getElementById('oneCycle').style.background= "white";
+	 document.getElementById('onecycle').removeAttribute("disabled");
+   document.getElementById('onecycle').style.backgroundColor= "white";
+	document.getElementById('pausesim').style.backgroundImage = "url('../static/pause2.png')";
+	document.getElementById('loadInp').removeAttribute("disabled");
+    document.getElementById('loadInp').style.background= "white";
+	 document.getElementById('loadinp').removeAttribute("disabled");
+   document.getElementById('loadinp').style.backgroundColor= "white";
+	updateProg();
+    }
+	else {
+	document.getElementById('oneCycle').setAttribute('disabled',true);
+	document.getElementById('oneCycle').style.background = "#ddd";
+	document.getElementById('onecycle').setAttribute('disabled',true);
+	document.getElementById('onecycle').style.backgroundColor = "#ddd";
+	document.getElementById('loadInp').setAttribute('disabled',true);
+    document.getElementById('loadInp').style.background = "#ddd";
+	document.getElementById('loadinp').setAttribute('disabled',true);
+	document.getElementById('loadinp').style.backgroundColor = "#ddd";
+	document.getElementById('pause').innerHTML = 'Пауза';
+	document.getElementById('pausesim').style.backgroundImage = "url('../static/pause.png')";
+	intervalId = setInterval(() => {
+	updateVars(); updateProg();}, 1000);
+   }
+}});
+}
+</script>
+
+<script>
+document.getElementById('loadInp').onclick = function() {
+var data = new FormData()
+  data.append('action', 'loadInputs_no_new_page')
+  data.append('poST_code', programText)
+  $("[name ='inputcheck']").each(function() {
+    data.append($(this).attr("name"), $(this).attr("value"))
+});
+console.log(Array.from(data.entries()))
+$.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){
+			   document.getElementById('Errors').value = "Input установлен";
+   }
+});
+
+  
+}
+</script>
+
+<script>
+document.getElementById('oneCycle').onclick = function() {
+if (document.getElementById('Run').style.background === "white")
+{
+programText=document.getElementById('poST_code').value;
+}
+var data = new FormData()
+  data.append('action', 'oneCycle')
+  data.append('poST_code', programText)
+  console.log(Array.from(data.entries()))
+  $.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){	   
+    document.getElementById('Run').setAttribute('disabled',true);
+document.getElementById('Run').style.background = "#ddd";
+  document.getElementById('run').setAttribute('disabled',true);
+document.getElementById('run').style.backgroundColor = "#ddd";
+    if(document.getElementById('pause').innerHTML === 'Пауза') {document.getElementById('pause').innerHTML = 'Продолжить'; document.getElementById('pausesim').style.backgroundImage = "url('../static/pause2.png')";}
+    if(document.getElementById('pauseSim').style.background === "#ddd"){
+	document.getElementById('pauseSim').removeAttribute("disabled");
+   document.getElementById('pauseSim').style.background="white";
+   document.getElementById('pausesim').removeAttribute("disabled");
+   document.getElementById('pausesim').style.backgroundColor= "white";
+   }
+   if(document.getElementById('stopSim').style.background === "#ddd"){
+   document.getElementById('stopSim').removeAttribute("disabled");
+   document.getElementById('stopSim').style.background= "white";
+   document.getElementById('stopsim').removeAttribute("disabled");
+   document.getElementById('stopsim').style.backgroundColor= "white";
+   }
+   if(document.getElementById('loadInp').style.background === "#ddd"){
+   document.getElementById('loadInp').removeAttribute("disabled");
+   document.getElementById('loadInp').style.background= "white";
+   document.getElementById('loadinp').removeAttribute("disabled");
+   document.getElementById('loadinp').style.backgroundColor= "white";
+   }
+   clearInterval(intervalId);
+   updateVars();
+   updateProg();
+
+}});
+}
+</script>
+
+<script>
+document.getElementById('stopSim').onclick = function() {
+var data = new FormData()
+  data.append('action', 'stopProgram')
+  data.append('poST_code', programText)
+  console.log(Array.from(data.entries()))
+  $.ajax({
+               type: 'POST',
+			   contentType: false,
+			   processData: false,
+               url: window.location.href,
+               data: data,
+               success: function(data){	   
+    document.getElementById('Run').removeAttribute("disabled");
+   document.getElementById('Run').style.background= "white";
+  document.getElementById('run').removeAttribute("disabled");
+   document.getElementById('run').style.backgroundColor= "white";
+    if(document.getElementById('pause').innerHTML === 'Продолжить') {document.getElementById('pause').innerHTML = 'Пауза'; document.getElementById('pausesim').style.backgroundImage = "url('../static/pause.png')";}
+	document.getElementById('pauseSim').setAttribute('disabled',true);
+	document.getElementById('pauseSim').style.background = "#ddd";
+	document.getElementById('pausesim').setAttribute('disabled',true);
+	document.getElementById('pausesim').style.backgroundColor = "#ddd";
+	document.getElementById('loadInp').setAttribute('disabled',true);
+    document.getElementById('loadInp').style.background = "#ddd";
+	document.getElementById('loadinp').setAttribute('disabled',true);
+   document.getElementById('loadinp').style.backgroundColor = "#ddd"
+	document.getElementById('oneCycle').removeAttribute("disabled");
+    document.getElementById('oneCycle').style.background = "white";
+	document.getElementById('onecycle').removeAttribute("disabled");
+   document.getElementById('onecycle').style.backgroundColor= "white";
+   document.getElementById('stopSim').setAttribute('disabled',true);
+   document.getElementById('stopSim').style.background = "#ddd";
+   document.getElementById('stopsim').setAttribute('disabled',true);
+   document.getElementById('stopsim').style.backgroundColor = "#ddd";
+   clearInterval(intervalId);
+   document.getElementById('poST_code').value = programText;
+   $('.ui-all').each(function() {
+    $(this).remove();
+});
+$('.ui-menu-item').each(function() {
+    $(this).remove();
+});
+
+document.getElementById('Output').value ="";
+document.getElementById('Input').value ="";
+document.getElementById('Times').value ="";
+document.getElementById('States').value ="";
+document.getElementById('Vars').value ="";
+document.getElementById('Globvars').value ="";
+}});
+}
+</script>
+
+<script>
+var programText;
+var modProgramText;
+function updateProg() {
+modProgramText = programText;
+updateProgStates()
+updateProgGlobvars()
+updateProgVars()
+}
+
+function updateProgStates() {
+$.getJSON("{{path}}"+"states", function(data) {
+                            
+			
+            
+                            for(var id in data){
+							let modId = id.toLowerCase();
+							modId = modId.substring(0,modId.length-6)
+							let indexSbstr = modProgramText.indexOf(modId);
+							while (indexSbstr != -1)
+							{
+							modProgramText = modProgramText.substring(0, indexSbstr + modId.length) + "<<" + data[id] + ">>" + modProgramText.substring(indexSbstr + modId.length, modProgramText.length);
+							 indexSbstr = modProgramText.indexOf(modId, indexSbstr + modId.length);
+							 }
+							}
+							document.getElementById('poST_code').value = modProgramText;
+        });
+}
+
+
+function updateProgGlobvars() {
+$.getJSON("{{path}}"+"globvars", function(data) {
+                            
+			
+            
+                      for(var id in data){
+							let indexSbstr = modProgramText.indexOf(id)
+							while (indexSbstr != -1)
+							{
+							modProgramText = modProgramText.substring(0, indexSbstr + id.length) + "<<" + data[id] + ">>" + modProgramText.substring(indexSbstr + id.length, modProgramText.length);
+							 indexSbstr = modProgramText.indexOf(id, indexSbstr + id.length);
+							 }
+							}
+							document.getElementById('poST_code').value = modProgramText;
+        });
+}
+
+function updateProgVars() {
+$.getJSON("{{path}}"+"vars", function(data) {
+                            
+			
+			        for(var id in data){
+							let modIdLow = id.toLowerCase();
+							let indexV = modIdLow.indexOf("_v_");
+							let indexP = modIdLow.indexOf("_p_");
+							if(indexV != -1){
+							let modId = modIdLow.substring(indexV+3, modIdLow.length)
+							let indexSbstr = modProgramText.indexOf(modId);
+							while (indexSbstr != -1)
+							{
+							modProgramText = modProgramText.substring(0, indexSbstr + modId.length) + "<<" + modIdLow.substring(indexP+3, indexV) +" , "+ data[id] + ">>" + modProgramText.substring(indexSbstr + modId.length, modProgramText.length);
+							 indexSbstr = modProgramText.indexOf(modId, indexSbstr + modId.length);
+							 }
+							}
+							}
+							document.getElementById('poST_code').value = modProgramText;
+        });
+}
+</script>
+
+
+<script>
+	
+
+    function updateVars() {
+	
+        $.getJSON("{{path}}"+"outputs", function(data) {
+                            
+			
+            document.getElementById('Output').value ="";
+                            for(var id in data){
+							 document.getElementById('Output').value = document.getElementById('Output').value + id + "=" + data[id] + "\n";
+							}
+        });
+		$.getJSON("{{path}}"+"states", function(data) {
+                            
+			
+            document.getElementById('States').value ="";
+                            for(var id in data){
+							 document.getElementById('States').value = document.getElementById('States').value + id + "=" + data[id] + "\n";
+							}
+        });
+		$.getJSON("{{path}}"+"inputs", function(data) {
+                            
+			
+            document.getElementById('Input').value ="";
+                            for(var id in data){
+							 document.getElementById('Input').value = document.getElementById('Input').value + id + "=" + data[id] + "\n";
+							}
+        });
+		$.getJSON("{{path}}"+"times", function(data) {
+                            
+			
+            document.getElementById('Times').value ="";
+                            for(var id in data){
+							 document.getElementById('Times').value = document.getElementById('Times').value + id + "=" + data[id] + "\n";
+							}
+        });
+		$.getJSON("{{path}}"+"globvars", function(data) {
+                            
+			
+            document.getElementById('Globvars').value ="";
+                            for(var id in data){
+							 document.getElementById('Globvars').value = document.getElementById('Globvars').value + id + "=" + data[id] + "\n";
+							}
+        });
+		$.getJSON("{{path}}"+"vars", function(data) {
+                            
+			
+            document.getElementById('Vars').value ="";
+                            for(var id in data){
+							 document.getElementById('Vars').value = document.getElementById('Vars').value + id + "=" + data[id] + "\n";
+							}
+        });
+    }
+</script>
+
+
+
+<!-- скрипт, который обработает нажатие на кнопку и отправит данные на сервер -->
+
+
+</body>
+</html>
